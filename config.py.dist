@@ -1,0 +1,59 @@
+# Set-up your project, dataset and table ID
+PROJECT_ID = "xxx"
+DATASET_ID = "xxx"
+TABLE_ID = "xxx"
+
+# No need to change this
+CREDENTIALS = "bigquery_credentials.dat"
+SECRET = "client_secrets.json"
+
+# Used to load Deezer playlist data.
+# Change only if you want to reuse the script w/ your own dataset
+QUERIES = "queries"
+DATA = ['gs://deezer-playlists/%s.json.gz' %(i) for i in xrange(1, 10)]
+SCHEMA = {
+    "name": "playlist",
+    "type":"RECORD",
+    "fields": [{
+        "name": "rating",
+        "type": "INTEGER"
+    }, {
+        "name": "id",
+        "type": "INTEGER"
+    }, {
+        "name": "tracks",
+        "type":"RECORD",
+        "fields": [{
+            "name": "data",
+            "type":"RECORD",
+            "mode" : "repeated",
+            "fields": [{
+                "name": "artist",
+                "type":"RECORD",
+                "fields": [{
+                    "name": "id",
+                    "type": "INTEGER"
+                }, {
+                    "name": "name",
+                    "type": "STRING"
+                }]
+            }, {
+                "name": "album",
+                "type":"RECORD",
+                "fields": [{
+                    "name": "id",
+                    "type": "INTEGER"
+                }, {
+                    "name": "title",
+                    "type": "STRING"
+                }]
+            }, {
+                "name": "title",
+                "type": "STRING"
+            }, {
+                "name": "id",
+                "type": "INTEGER"
+            }]
+        }]
+    }]
+}
